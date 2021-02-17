@@ -4,10 +4,356 @@
         <name>Cryptool</name>
     </assembly>
     <members>
-        <member name="T:Cryptool.Class1">
+        <member name="T:Cryptool.Hmac512">
+             <summary>
+               Abstraction on the top of Hmacsha512 to add functionalities.
+             </summary>
+            
+        </member>
+        <member name="F:Cryptool.Hmac512.SignatureByteLength">
+             <summary>
+               Signature size (512 bits) in bytes.
+             </summary>
+            
+        </member>
+        <member name="M:Cryptool.Hmac512.Verify(System.Byte[],System.Byte[])">
+             <summary>
+               Verifies the hmac signature included in a data buffer.
+               The signature must be the first 64 bytes.
+             </summary>
+            
+             <param name="key"> Key used to sign. </param>
+            
+             <param name="buf"> Buffer to be signed. </param>
+            
+             <returns>
+               True if the signature is correct, false otherwise.
+             </returns>
+            
+             <exception cref="T:System.ArgumentException">
+               The buffer is too short.
+             </exception>
+            
+        </member>
+        <member name="M:Cryptool.Hmac512.VerifyTrim(System.Byte[],System.Byte[])">
+             <summary>
+               Verifies the hmac signature included in buf.
+               The signature must be the first 64 bytes.
+            
+               The signature is trimmed if the hmac is valid
+               and data array is returned.
+             </summary>
+            
+             <param name="key"> Key to verify signature. </param>
+            
+             <param name="buf"> Data on which signature was computed. </param>
+            
+             <returns>
+               Byte array containing the authenticated data if
+               the signature is valid, `null` otherwise.
+             </returns>
+            
+             <exception cref="T:System.ArgumentException">
+               Key is null
+               or
+               Input buffer is too small or null.
+             </exception>
+            
+        </member>
+        <member name="M:Cryptool.Hmac512.TrimSignature(System.Byte[])">
+             <summary>
+               Trims the prepended Hmac signature.
+             </summary>
+            
+             <param name="buf"></param>
+            
+             <returns></returns>
+            
+        </member>
+        <member name="M:Cryptool.Hmac512.SignPrepend(System.Byte[],System.Byte[])">
+             <summary>
+               Signs the given buffer and prepend the signature.
+             </summary>
+            
+             <param name="key"> Key used to sign. </param>
+            
+             <param name="buf"> Data buffer to be signed. </param>
+            
+             <returns> Signature and data buffer concatenated. </returns>
+            
+             <exception cref="T:System.ArgumentException">
+               The buffer is too short.
+             </exception>
+            
+        </member>
+        <member name="M:Cryptool.Hmac512.ComputeSignature(System.Byte[],System.Byte[])">
+             <summary>
+               Computes the HMAC signature.
+             </summary>
+             <param name="key"></param>
+             <param name="buf"></param>
+             <returns></returns>
+            
+        </member>
+        <member name="T:Cryptool.BufArray">
+             <summary>
+               Utils related to byte[] manipulation.
+             </summary>
+            
+        </member>
+        <member name="M:Cryptool.BufArray.Combine(System.Byte[],System.Byte[])">
+             <summary>
+               Combines two arrays in one new array.
+             </summary>
+            
+             <param name="first">
+               The first array, placed from indice 0 in the new array.
+             </param>
+            
+             <param name="second">
+               The second array, placed from first.Length in the new array.
+             </param>
+            
+             <returns> Combined array. </returns>
+        </member>
+        <member name="M:Cryptool.BufArray.Compare(System.Byte[],System.Int32,System.Byte[],System.Int32,System.Int32)">
+             <summary>
+               Compare two arrays byte by byte, starting at
+               specified offset in arrays to be compared.
+             </summary>
+            
+             <param name="first">
+               The first array.
+             </param>
+            
+             <param name="firstOffset">
+               The offset where the comparison starts in the first array.
+             </param>
+            
+             <param name="second">
+               The second array.
+             </param>
+            
+             <param name="secondOffset">
+               The offset where the comparison starts in the second array.
+             </param>
+            
+             <param name="len">
+               Length of the comparison.
+             </param>
+            
+             <returns>
+               True if compared bytes are equal, false otherwise.
+             </returns>
+        </member>
+        <member name="M:Cryptool.BufArray.SubArray(System.Byte[],System.Int32,System.Int32)">
+             <summary>
+               Extracts subarray from input buffer.
+             </summary>
+            
+             <param name="buf">  </param>
+            
+             <param name="offset">  </param>
+            
+             <param name="length">  </param>
+            
+             <returns> Subarray. </returns>
+        </member>
+        <member name="M:Cryptool.BufArray.Wipe0(System.Byte[])">
+             <summary>
+               Wipes the given array filling it with 0.
+             </summary>
+            
+             <param name="arr"></param>
+            
+        </member>
+        <member name="T:Cryptool.Argon2Parameter">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.Argon2Parameter.Parallelism">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.Argon2Parameter.MemorySize1Kb">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.Argon2Parameter.Iterations">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.Argon2Parameter.BitCount">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.Argon2Parameter.Salt">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.Argon2Parameter.Data">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="T:Cryptool.Argon2">
             <summary>
-              ahahah
+              Argon2id.
             </summary>
+        </member>
+        <member name="M:Cryptool.Argon2.ComputeHash2id(System.Byte[],Cryptool.Argon2Parameter)">
+            <summary>
+              Computes argon2id hash.
+            </summary>
+            <param name="password"></param>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cryptool.Argon2.VerifyHash2id(System.Byte[],Cryptool.Argon2Parameter,System.Byte[])">
+            <summary>
+              Verifies an argon2 hash.
+            </summary>
+            <param name="password"></param>
+            <param name="param"></param>
+            <param name="hash"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cryptool.RsaKeyPair">
+            <summary>
+              RSA Keypair.
+            </summary>
+        </member>
+        <member name="F:Cryptool.RsaKeyPair.Pub">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.RsaKeyPair.Prv">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="T:Cryptool.Rsa">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:Cryptool.Rsa.EncryptOAEP512(System.Byte[],System.Int32,System.Byte[])">
+            <summary>
+              Encrypts data with Rsa OAEP512.
+            </summary>
+            <param name="pubKey"></param>
+            <param name="keySize"></param>
+            <param name="plain"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cryptool.Rsa.DecryptOAEP512(System.Byte[],System.Int32,System.Byte[])">
+            <summary>
+              Decrypts data with Rsa OAEP512.
+            </summary>
+            <param name="privKey"></param>
+            <param name="keySize"></param>
+            <param name="cipher"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cryptool.Rng">
+             <summary>
+               Random data for cryptography.
+             </summary>
+            
+        </member>
+        <member name="F:Cryptool.Rng.rngCsp">
+             <summary>
+               Random generator.
+             </summary>
+            
+        </member>
+        <member name="M:Cryptool.Rng.U64(System.UInt64,System.UInt64)">
+             <summary>
+               Generates a random U64 value.
+             </summary>
+            
+             <param name="min"> Lower limit, included. </param>
+            
+             <param name="max"> Upper limit, included. </param>
+            
+             <returns> Random ulong. </returns>
+            
+        </member>
+        <member name="M:Cryptool.Rng.GetBytes(System.Byte[])">
+             <summary>
+               Generates random numbers to fill the given array.
+             </summary>
+            
+             <returns> Random generated bytes. </returns>
+            
+        </member>
+        <member name="M:Cryptool.Rng.GetBytes(System.Int32)">
+             <summary>
+               Generates random numbers of the given size
+               and return the base 64 string.
+             </summary>
+            
+             <returns> Base 64 string of the generated array. </returns>
+            
+        </member>
+        <member name="T:Cryptool.AesGcm">
+            <summary>
+              Aes GCM.
+            </summary>
+        </member>
+        <member name="M:Cryptool.AesGcm.Decrypt(System.Byte[],System.Byte[])">
+             <summary>
+               Decrypts incoming encrypted payload using AES-GCM.
+               No additional data expected.
+             </summary>
+            
+             <param name="key"> Key bytes, must be 32 bytes long. </param>
+            
+             <param name="infoCipher"> IV|CipherText|Tag </param>
+            
+             <returns> Plain text buffer if success, null otherwise. </returns>
+            
+             <exception cref="T:System.ArgumentException">
+               The key is not 32 bytes long.
+             </exception>
+            
+        </member>
+        <member name="M:Cryptool.AesGcm.Encrypt(System.Byte[],System.Byte[],System.Byte[])">
+             <summary>
+               Encrypts data using AesGcm.
+            
+               If no IV provided, IV is generated.
+             </summary>
+            
+             <param name="key"> Bytes of the key, must be 32 bytes long. </param>
+            
+             <param name="plainText"> Plaintext to be encrypted, at least 1 byte. </param>
+            
+             <param name="nonce">
+               Optional nonce. If null, it will be auto generated.
+               If provided, must be 12 bytes long.
+             </param>
+            
+             <returns>
+               AesGcm encrypted payload nounce|ciphertext|tag if success,
+               `null` otherwise.
+             </returns>
+            
+             <exception cref="T:System.ArgumentException">
+               The key is not 32 bytes long
+               or
+               The plain text is null
+               or
+               The given nonce is not 12 bytes long.
+             </exception>
+            
         </member>
     </members>
 </doc>

@@ -19,4 +19,8 @@
     <DocumentationFile>Cryptool.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
+  </ItemGroup>
+
 </Project>
