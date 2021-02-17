@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <PackageId>Cryptool</PackageId>
+
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>glihm</Authors>
+    <Company>glihmware</Company>
+    <Description>Convenient wrappers of pure .NET5 cryptography.</Description>
+    <Copyright>© glihmware</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/glihmware/cryptool.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/glihmware/cryptool.git</RepositoryUrl>
+    <PackageTags>Cryptography</PackageTags>
+    <Version>1.0.0</Version>
+    <DocumentationFile>Cryptool.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
