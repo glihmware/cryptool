@@ -30,7 +30,7 @@ namespace Cryptool
     /// <summary>
     ///
     /// </summary>
-    public int BitCount;
+    public int ByteCount;
 
     /// <summary>
     ///
@@ -59,7 +59,9 @@ namespace Cryptool
     public static byte[]
     ComputeHash2id(byte[] password, Argon2Parameter param)
     {
-      using (var a2id = new Argon2id(password))
+      var a2id = new Argon2id(password);
+
+      try
       {
         a2id.DegreeOfParallelism = param.Parallelism;
         a2id.MemorySize = param.MemorySize1Kb;
@@ -68,7 +70,15 @@ namespace Cryptool
 
         a2id.Salt = param.Salt;
 
-        return a2id.GetBytes(param.BitCount);
+        return a2id.GetBytes(param.ByteCount);
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+      finally
+      {
+        a2id.Dispose();
       }
     }
 
@@ -77,17 +87,26 @@ namespace Cryptool
     ///   Verifies an argon2 hash.
     /// </summary>
     /// <param name="password"></param>
+    /// <param name="hashCanditate"></param>
     /// <param name="param"></param>
-    /// <param name="hash"></param>
     /// <returns></returns>
     public static bool
-    VerifyHash2id(byte[] password, Argon2Parameter param, byte[] hash)
+    VerifyHash2id(byte[] password, byte[] hashCanditate, Argon2Parameter param)
     {
+      if (password == null || hashCanditate == null)
+      {
+        return false;
+      }
+
       byte[] _hash = ComputeHash2id(password, param);
-      return _hash.SequenceEqual(hash);
+
+      if (_hash == null)
+      {
+        return false;
+      }
+
+      return _hash.SequenceEqual(hashCanditate);
     }
-
-
 
   }
 }

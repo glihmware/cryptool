@@ -9,6 +9,26 @@ namespace Cryptool
   public static class BufArray
   {
     /// <summary>
+    ///   Retrieves arrya of bytes from base64 string.
+    /// </summary>
+    ///
+    /// <param name="b64"></param>
+    ///
+    /// <returns> byte[] with decoded data on success, null otherwise. </returns>
+    ///
+    public static byte[] BufferFromB64(string b64)
+    {
+      try
+      {
+        return Convert.FromBase64String(b64);
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
     ///   Combines two arrays in one new array.
     /// </summary>
     ///

@@ -4,6 +4,47 @@
         <name>Cryptool</name>
     </assembly>
     <members>
+        <member name="T:Cryptool.Ecdsa">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:Cryptool.Ecdsa.GenerateKey(System.Int32,System.String)">
+             <summary>
+               Generates a new keypair for ECDSA.
+            
+               In ECDSA, the private key also contains the public key.
+             </summary>
+             <param name="keySize"></param>
+             <param name="password"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Cryptool.Ecdsa.Sign(Cryptool.CryptoKeyPair,System.Byte[],System.String)">
+            <summary>
+              Signs input data buffer.
+            </summary>
+            <param name="kp"></param>
+            <param name="data"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cryptool.Ecdsa.Verify(Cryptool.CryptoKeyPair,System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte})">
+            <summary>
+              Verifies the signature on input data buffer.
+            </summary>
+            <param name="kp"></param>
+            <param name="signature"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cryptool.Ecdsa.VerifyPubKeyImport(System.Byte[],System.Int32)">
+            <summary>
+              Verifies if the given key can be imported as a valid public key.
+            </summary>
+            <param name="pubKey"></param>
+            <param name="keySize"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cryptool.Hmac512">
              <summary>
                Abstraction on the top of Hmacsha512 to add functionalities.
@@ -101,6 +142,16 @@
              </summary>
             
         </member>
+        <member name="M:Cryptool.BufArray.BufferFromB64(System.String)">
+             <summary>
+               Retrieves arrya of bytes from base64 string.
+             </summary>
+            
+             <param name="b64"></param>
+            
+             <returns> byte[] with decoded data on success, null otherwise. </returns>
+            
+        </member>
         <member name="M:Cryptool.BufArray.Combine(System.Byte[],System.Byte[])">
              <summary>
                Combines two arrays in one new array.
@@ -167,6 +218,73 @@
              <param name="arr"></param>
             
         </member>
+        <member name="T:Cryptool.CryptoKeyPair">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.CryptoKeyPair.Prv">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.CryptoKeyPair.Pub">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Cryptool.CryptoKeyPair.KeySize">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.#ctor">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.#ctor(System.Int32,System.Byte[],System.Byte[])">
+            <summary>
+              Constructs from keys.
+            </summary>
+            <param name="keySize"></param>
+            <param name="prv"></param>
+            <param name="pub"></param>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+              Constructs from base64 string keys.
+            </summary>
+            <param name="keySize"></param>
+            <param name="prv"></param>
+            <param name="pub"></param>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.ToString">
+             <summary>
+            
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.ConcatKeysB64">
+            <summary>
+              Computes the concatenated form of the CryptoKeyPair.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.FromConcatKeysB64(System.String,System.Int32)">
+            <summary>
+              Builds a CryptoKeyPair from it's concatenated form.
+            </summary>
+            <param name="concatKeys"></param>
+            <param name="keySize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cryptool.CryptoKeyPair.GetBase64Pair">
+            <summary>
+              Computes the base64 string for each Prv and Pub keys.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Cryptool.Argon2Parameter">
              <summary>
             
@@ -187,7 +305,7 @@
             
              </summary>
         </member>
-        <member name="F:Cryptool.Argon2Parameter.BitCount">
+        <member name="F:Cryptool.Argon2Parameter.ByteCount">
              <summary>
             
              </summary>
@@ -215,13 +333,13 @@
             <param name="param"></param>
             <returns></returns>
         </member>
-        <member name="M:Cryptool.Argon2.VerifyHash2id(System.Byte[],Cryptool.Argon2Parameter,System.Byte[])">
+        <member name="M:Cryptool.Argon2.VerifyHash2id(System.Byte[],System.Byte[],Cryptool.Argon2Parameter)">
             <summary>
               Verifies an argon2 hash.
             </summary>
             <param name="password"></param>
+            <param name="hashCanditate"></param>
             <param name="param"></param>
-            <param name="hash"></param>
             <returns></returns>
         </member>
         <member name="T:Cryptool.RsaKeyPair">
@@ -244,22 +362,37 @@
             
              </summary>
         </member>
-        <member name="M:Cryptool.Rsa.EncryptOAEP512(System.Byte[],System.Int32,System.Byte[])">
+        <member name="M:Cryptool.Rsa.GenerateKeys(System.Int32,System.String)">
+             <summary>
+            
+             </summary>
+             <param name="keySize"></param>
+             <param name="password"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Cryptool.Rsa.EncryptOAEP512(Cryptool.CryptoKeyPair,System.Byte[])">
+             <summary>
+            
+             </summary>
+             <param name="kp"></param>
+             <param name="plain"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Cryptool.Rsa.DecryptOAEP512(Cryptool.CryptoKeyPair,System.Byte[],System.String)">
+             <summary>
+            
+             </summary>
+             <param name="kp"></param>
+             <param name="cipher"></param>
+             <param name="password"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Cryptool.Rsa.VerifyPubKeyImport(System.Byte[],System.Int32)">
             <summary>
-              Encrypts data with Rsa OAEP512.
+              Verifies if the given key can be imported as a valid public key.
             </summary>
             <param name="pubKey"></param>
             <param name="keySize"></param>
-            <param name="plain"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cryptool.Rsa.DecryptOAEP512(System.Byte[],System.Int32,System.Byte[])">
-            <summary>
-              Decrypts data with Rsa OAEP512.
-            </summary>
-            <param name="privKey"></param>
-            <param name="keySize"></param>
-            <param name="cipher"></param>
             <returns></returns>
         </member>
         <member name="T:Cryptool.Rng">
