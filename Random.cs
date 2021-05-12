@@ -52,12 +52,8 @@ namespace Cryptool
       | bytes[7]
       );
 
-      if (r < min || r > max)
-      {
-        goto generate;
-      }
-
-      return r;
+      // +1 to include max.
+      return r % (max - min + 1) + min;
     }
 
 
