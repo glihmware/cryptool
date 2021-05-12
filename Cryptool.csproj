@@ -15,7 +15,7 @@
         <PackageProjectUrl>https://github.com/glihmware/cryptool.git</PackageProjectUrl>
         <RepositoryUrl>https://github.com/glihmware/cryptool.git</RepositoryUrl>
         <PackageTags>Cryptography</PackageTags>
-        <Version>1.0.3</Version>
+        <Version>1.0.4</Version>
         <DocumentationFile>Cryptool.xml</DocumentationFile>
     </PropertyGroup>
 
